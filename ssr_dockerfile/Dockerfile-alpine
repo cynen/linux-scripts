@@ -1,0 +1,48 @@
+# Dockerfile for ShadowsocksR
+# https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh
+# 使用Alpine系统改造试一下
+
+FROM alpine:3.8
+
+LABEL maintainer="Cynen <cynen@foxmail.com>"
+
+# prepare
+RUN apk update \
+  && apk add --update alpine-sdk \
+  && apk add procps \
+  && apk add bash \
+  && apk add wget \
+  && apk add python \
+  && rm -rf /var/lib/apt/lists/* \
+  && export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/sbin:/usr/local/games:/usr/games
+
+# install ssr
+RUN cd /usr/local \
+  && mkdir ssr \
+  && cd ssr \
+  && wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh \
+  && chmod +x shadowsocksR.sh \
+  && \n | ./shadowsocksR.sh 2>&1 | tee shadowsocksR.log \
+  && \n; exit 0
+
+# ssr configuration
+COPY shadowsocks.json /etc/
+
+# ssr script
+RUN cd /usr/local/ssr \
+  # fake log
+  && touch fake_log.log \
+  # start.sh
+  && touch start.sh \
+  && echo 'python /usr/local/shadowsocks/server.py -c /etc/shadowsocks.json -d start && tail -f /usr/local/ssr/fake_log.log' > start.sh \
+  && chmod 775 start.sh \
+  # stop.sh
+  && touch stop.sh \
+  && echo 'python /usr/local/shadowsocks/server.py -c /etc/shadowsocks.json -d stop' > stop.sh \
+  && chmod 775 stop.sh \
+  # restart.sh
+  && touch restart.sh \
+  && echo './stop.sh && ./start.sh' > restart.sh \
+  && chmod 775 restart.sh
+
+ENTRYPOINT ["sh", "/usr/local/ssr/start.sh"]
