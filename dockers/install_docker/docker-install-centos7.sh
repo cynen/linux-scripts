@@ -3,6 +3,12 @@
 # 一键在CentOS系统上安装 Docker服务的脚本
 # 系统要求: CentOS 7 以上.
 
+# 判断入参,入参不正确给出提示.
+if [ ! -n "$1" ]; then
+	echo "入参为   start  或者  always";
+	exit 1; 
+fi;
+
 # 定义准备安装的docker的版本,脚本后面会使用到.
 DockerVersion=docker-ce-18.06.3.ce-3.el7
 
