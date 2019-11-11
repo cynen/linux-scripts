@@ -5,7 +5,10 @@
 
 # 判断入参,入参不正确给出提示.
 if [ ! -n "$1" ]; then
-	echo "入参为   start  或者  always";
+	echo "请提供脚本执行的参数,指定start或者always";
+	echo "start表示安装完成后,系统随即启动docker";
+	echo "always表示安装完成后,系统启动docker,并且配置自动重启.";
+	echo "eg : sh docker-install-centos7.sh always";
 	exit 1; 
 fi;
 
