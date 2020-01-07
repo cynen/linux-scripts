@@ -1,6 +1,6 @@
-# aptµÄ°¢ÀïÔ´.
-#Ìí¼Ó°¢ÀïÔ´
-# Çë½«´ËÎÄ¼ş·ÅÖÃÓÚ: /etc/apt/Ä¿Â¼ÏÂµÄsource.listÎÄ¼şÖĞ.
+# aptçš„é˜¿é‡Œæº.
+#æ·»åŠ é˜¿é‡Œæº
+# è¯·å°†æ­¤æ–‡ä»¶æ”¾ç½®äº: /etc/apt/ç›®å½•ä¸‹çš„source.listæ–‡ä»¶ä¸­.
 
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
